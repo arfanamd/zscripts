@@ -6,6 +6,7 @@
 # csv format is email,password,name,description
 set -uf -o pipefail
 
+# check user
 if [[ $(id -nu) != "zimbra" ]]; then
   printf "Error: run this script as user zimbra!\n"
   exit 1
@@ -17,11 +18,13 @@ file="${1}"
 day="$(date +'%d-%m-Y')"
 log="/var/log/zaccountadd.${day}"
 
+# check input file
 if [[ ! -f ${file} ]]; then
   printf "Error: file ${file} doesn't exist.\n"
   exit 1
 fi
 
+# accounts creation process
 while IFS=',' read -r email password name description; do
   id="$(zmprov ca ${email} ${password} displayName "${name}" description "${description}" 2>/dev/null)"
   if [[ ${?} -eq 0 ]]; then
