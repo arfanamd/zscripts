@@ -24,3 +24,8 @@ zmprov getIndexStats <email-account>
 ```
 zmprov ma <email-account> zimbraMailQuota <size-in-byte>
 ```
+
+### Get Zimbra account data in ldif format
+```
+ldapsearch -H ldapi:/// -x -LLL -b <ou=people,dc=your,dc=domain> -D <zimbra-ldap-user-dn> -w <zimbra-ldap-pass> '(&(objectClass=zimbraAccount)(uid=%s))' -f <list-account-without-domain>.txt
+```
