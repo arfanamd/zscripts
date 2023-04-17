@@ -15,8 +15,8 @@ fi
 success=0
 failed=0
 file="${1}"
-day="$(date +'%d-%m-Y')"
-log="/var/log/zaccountadd.${day}"
+day="$(date +'%d%b%Y')"
+log="/tmp/zaccountadd.${day}"
 
 # check input file
 if [[ ! -f ${file} ]]; then
@@ -24,15 +24,16 @@ if [[ ! -f ${file} ]]; then
   exit 1
 fi
 
+test -f ${log} && truncate -s0 ${log}
+
 # accounts creation process
 while IFS=',' read -r email password name description; do
-  id="$(zmprov ca ${email} ${password} displayName "${name}" description "${description}" 2>/dev/null)"
+  id="$(zmprov ca ${email} ${password} displayName "${name}" description "${description}" 2>> ${log})"
   if [[ ${?} -eq 0 ]]; then
-    ((success++)); printf "account ${email} has been created.\n"
+    ((success++)); printf "\e[92maccount\e[0m ${email} has been created.\n"
   else
-    ((failed++)); printf "failed to create ${email}. account exist or some data is invalid\n"
-    printf "${email},${password},${name},${description}\n" >> ${log}
+    ((failed++)); printf "\e[91mfailed\e[0m to create ${email}. account exist or some data is invalid\n"
   fi
 done < "${file}"
 
-printf "Summary: %d failed, %d new account(s).\n" ${failed} ${success}
+printf "\nSummary: %d failed, %d new account(s).\n" ${failed} ${success}
