@@ -32,7 +32,7 @@ while IFS=',' read -r email password name description; do
   if [[ ${?} -eq 0 ]]; then
     ((success++)); printf "\e[92maccount\e[0m ${email} has been created.\n"
   else
-    ((failed++)); printf "\e[91mfailed\e[0m to create ${email}. account exist or some data is invalid\n"
+    ((failed++)); printf "\e[91mfailed\e[0m to create ${email}. Check out the log: ${log}\n"
   fi
 done < "${file}"
 
