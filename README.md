@@ -29,3 +29,13 @@ zmprov ma <email-account> zimbraMailQuota <size-in-byte>
 ```
 ldapsearch -H ldapi:/// -x -LLL -b <ou=people,dc=your,dc=domain> -D <zimbra-ldap-user-dn> -w <zimbra-ldap-pass> '(&(objectClass=zimbraAccount)(uid=%s))' -f <list-account-without-domain>.txt
 ```
+
+### Search message from user
+```
+zmmailbox -z -m <user-account> search -l 1000 "in:<path> [before|after|on|is]"
+```
+
+### Delete message from user
+```
+zmmailbox -z -m <user-account> deleteMessage <message-id>
+```
