@@ -39,3 +39,8 @@ zmmailbox -z -m <user-account> search -l 1000 "in:<path> [before|after|on|is]"
 ```
 zmmailbox -z -m <user-account> deleteMessage <message-id>
 ```
+
+### Display account info by account name using ldapsearch
+```
+ldapsearch -H ldapi:/// -LLL -x -b <dc=your,dc=domain> -D <zimbra-ldap-user-dn> -w <zimbra-ldap-pass> '(uid=%s)' -f <file-contain-list-of-user>
+```
