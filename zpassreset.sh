@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euf -o pipefail
 
-# Run as user zimbra
+# Run as zimbra
 if [[ $(id -nu) != "zimbra" ]]; then
   echo 'Run as zimbra!'
   exit 1
@@ -51,14 +51,16 @@ while getopts "he:f:" __option; do
        ;;
     f)
        fileList="${OPTARG}"
-       while IFS=$'\n' read -r user; do
-         __err=$(${resetPass} ${user} ${__default} 2>&1 >/dev/null) && ${modAcc} ${user} ${passOpts}
-         if [[ ${?} -eq 0 ]]; then
-           echo -e "Password for ${user} has been set to \e[1m${__default}\e[0m"
-         else
-           echo -e "\e[91m${__err}\e[0m"
-         fi
-       done < ${fileList}
+       if [[ -f "${fileList}" ]]; then
+           while IFS=$'\n' read -r user; do
+             __err=$(${resetPass} ${user} ${__default} 2>&1 >/dev/null) && ${modAcc} ${user} ${passOpts}
+             if [[ ${?} -eq 0 ]]; then
+               echo -e "Password for ${user} has been set to \e[1m${__default}\e[0m"
+             else
+               echo -e "\e[91m${__err}\e[0m"
+             fi
+           done < ${fileList}
+       fi
        ;;
     *)
        usage
