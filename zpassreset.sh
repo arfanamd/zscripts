@@ -33,7 +33,7 @@ resetPass='/opt/zimbra/bin/zmprov setPassword'
 modAcc='/opt/zimbra/bin/zmprov modifyAccount'
 fileList=''
 
-passOpts="\                                                                                                                                                               [6/681]
+passOpts="\
   zimbraPasswordMustChange TRUE \
   zimbraPasswordMinLength 8 \
   zimbraPasswordMinLowerCaseChars 1 \
