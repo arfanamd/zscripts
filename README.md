@@ -5,6 +5,11 @@
 zmprov getQuotaUsage $(zmhostname) | awk '{ printf "user: %-25s, usage: %-5.2fKB, quota: %-5.2fKB\n", $1, ($3 / 1024), ($2 / 1024)}'
 ```
 
+### Get account usage percentage quota
+```
+zmprov getQuotaUsage <mailbox-host> | awk '$2 != 0 { printf "%.0f %s\n", (($3/$2)*100), $1 }'
+```
+
 ### Send email (mta)
 ```
 cat <email-file> | /opt/zimbra/common/sbin/sendmail -t <recipient>
