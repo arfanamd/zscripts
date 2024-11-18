@@ -27,7 +27,7 @@ accAdd='/opt/zimbra/bin/zmprov createAccount'
 modAcc='/opt/zimbra/bin/zmprov modifyAccount'
 
 # must to change password at first successful login
-passOpts="\                                                                                                                                                               [6/681]
+passOpts="\
   zimbraPasswordMustChange TRUE \
   zimbraPasswordMinLength 8 \
   zimbraPasswordMinLowerCaseChars 1 \
