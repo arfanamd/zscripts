@@ -7,7 +7,7 @@ if [[ $(id -nu) != "zimbra" ]]; then
   exit 1
 fi
 
-if [[ ${#} -lt 1 ]];
+if [[ ${#} -lt 1 ]]; then
   cat <<-eol
   add accounts.
 
