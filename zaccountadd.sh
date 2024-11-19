@@ -42,13 +42,13 @@ if [[ ! -f ${file} ]]; then
 fi
 
 # accounts creation process
-while IFS=',' read -r email password name description; do
+while IFS='^' read -r email password name description; do
   id="$(${accAdd} ${email} ${password} displayName "${name}" description "${description}" ${passOpts} 2>&1)"
   if [[ ${?} -eq 0 ]]; then
     ((success++)); printf "\e[92maccount\e[0m ${email} has been created.\n"
   else
     ((failed++)); printf "\e[91mfailed\e[0m ${id}\n"
   fi
-done < "${file}"
+done < <(command awk -v FPAT='([^,]+)|(\"[^\"]+\")' -v OFS='^' '{print $1,$2,$3,$4}' ${file} | command sed 's/"//g')
 
 printf "\nSummary: %d failed, %d new account(s).\n" ${failed} ${success}
