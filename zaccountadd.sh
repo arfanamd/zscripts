@@ -17,6 +17,7 @@ if [[ ${#} -lt 1 ]]; then
   Note:
     csv format is email,password,name,description
 	eol
+	exit 0
 fi
 
 success=0
