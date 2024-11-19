@@ -25,7 +25,6 @@ failed=0
 file="${1}"
 
 accAdd='/opt/zimbra/bin/zmprov createAccount'
-modAcc='/opt/zimbra/bin/zmprov modifyAccount'
 
 # must to change password at first successful login
 passOpts="\
@@ -44,10 +43,9 @@ fi
 
 # accounts creation process
 while IFS=',' read -r email password name description; do
-  id="$(${accAdd} ${email} ${password} displayName "${name}" description "${description}" 2>&1)"
+  id="$(${accAdd} ${email} ${password} displayName "${name}" description "${description}" ${passOpts} 2>&1)"
   if [[ ${?} -eq 0 ]]; then
-    ${modAcc} ${email} ${passOpts} && ((success++))
-    printf "\e[92maccount\e[0m ${email} has been created.\n"
+    ((success++)); printf "\e[92maccount\e[0m ${email} has been created.\n"
   else
     ((failed++)); printf "\e[91mfailed\e[0m ${id}\n"
   fi
