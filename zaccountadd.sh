@@ -49,6 +49,6 @@ while IFS='^' read -r email password name description; do
   else
     ((failed++)); printf "\e[91mfailed\e[0m ${id}\n"
   fi
-done < <(command awk -v FPAT='([^,]+)|(\"[^\"]+\")' -v OFS='^' '{print $1,$2,$3,$4}' ${file} | command sed 's/"//g')
+done < <(command gawk -v FPAT='([^,]+)|(\"[^\"]+\")' -v OFS='^' '{$1=$1; gsub(/"/,"",$0);} 1' ${file})
 
 printf "\nSummary: %d failed, %d new account(s).\n" ${failed} ${success}
